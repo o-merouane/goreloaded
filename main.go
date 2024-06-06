@@ -85,6 +85,7 @@ func main() {
 						myword = strings.Replace(myword, words[k-i], newword, -1)
 						fmt.Println(myword)
 					}
+
 				}
 				myword += strings.Title(libs.ToLower(tab[0])) + " "
 
