@@ -8,14 +8,6 @@ import (
 	"strings"
 )
 
-func processWord(words []string, index int, count int, transform func(string) string) {
-	for i := 0; i < count; i++ {
-		if index-i >= 0 {
-			words[index-i] = transform(words[index-i])
-		}
-	}
-}
-
 func main() {
 	// Check for the correct number of arguments
 	if len(os.Args) < 3 {
