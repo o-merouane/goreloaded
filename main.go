@@ -44,13 +44,12 @@ func main() {
 
 	for scanner.Scan() {
 		line := scanner.Text()
+		// Removing space from (low, n), (up, n), (cap, n)
 		line = libs.FAdjustPunctuation(line)
 		words := strings.Fields(line)
 
-		// REmoving commas from (low), (up), (cap)
-
 		var tab [2]string
-
+		t := 0
 		for k, word := range words {
 			tab[0], tab[1] = tab[1], word
 
@@ -59,40 +58,50 @@ func main() {
 				count := 1
 				if strings.Contains(word, ",") {
 					fmt.Sscanf(word, "(up,%d)", &count)
-					for i := count; i > 0; i-- {
-						newword := libs.ToUpper(words[k-i])
-						myword = strings.Replace(myword, words[k-i], newword, -1)
+
+					w := strings.Fields(myword)
+					myword = strings.Join(w[:k-count-t], " ") + " "
+
+					for i := count; i > 1; i-- {
+						myword += libs.ToUpper(words[k-i]) + " "
 					}
 				}
 				myword += libs.ToUpper(tab[0]) + " "
-
+				t++
 			case strings.HasPrefix(word, "(low"):
 				count := 1
 				if strings.Contains(word, ",") {
 					fmt.Sscanf(word, "(low,%d)", &count)
-					for i := count; i > 0; i-- {
-						newword := libs.ToLower(words[k-i])
-						myword = strings.Replace(myword, words[k-i], newword, -1)
+
+					w := strings.Fields(myword)
+					myword = strings.Join(w[:k-count-t], " ") + " "
+
+					for i := count; i > 1; i-- {
+						myword += libs.ToLower(words[k-i]) + " "
 					}
 				}
 				myword += libs.ToLower(tab[0]) + " "
+				t++
 			case strings.HasPrefix(word, "(cap"):
 				count := 1
 				if strings.Contains(word, ",") {
 					fmt.Sscanf(word, "(cap,%d)", &count)
-					for i := count; i > 0; i-- {
-						newword := strings.Title(libs.ToLower(words[k-i]))
-						myword = strings.Replace(myword, words[k-i], newword, -1)
-						fmt.Println(myword)
-					}
 
+					w := strings.Fields(myword)
+					myword = strings.Join(w[:k-count-t], " ") + " "
+
+					for i := count; i > 1; i-- {
+						myword += strings.Title(libs.ToLower(words[k-i])) + " "
+					}
 				}
 				myword += strings.Title(libs.ToLower(tab[0])) + " "
-
+				t++
 			case word == "(hex)":
 				myword += libs.Hex(tab[0]) + " "
+				t++
 			case word == "(bin)":
 				myword += libs.Bin(tab[0]) + " "
+				t++
 			default:
 				if !strings.HasPrefix(tab[0], "(") && tab[0] != "" {
 					myword += tab[0] + " "
