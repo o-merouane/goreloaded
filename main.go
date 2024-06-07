@@ -102,8 +102,9 @@ func main() {
 		}
 
 		// Add the last word
-		myword += tab[1]
-
+		if !strings.HasPrefix(tab[1], "(") {
+			myword += tab[1]
+		}
 	}
 
 	// Adjust punctuation
