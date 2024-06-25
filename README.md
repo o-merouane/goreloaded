@@ -1,43 +1,72 @@
-Text Completion/Editing/Auto-Correction Tool
+# Text Modification Tool in Go
 
-Introduction
-This project is a text completion/editing/auto-correction tool written in Go. The tool reads a text file, applies various modifications to the text based on specific patterns, and writes the modified text to a new file. This project will be reviewed by peer auditors, and you will also act as an auditor for other students' projects.
+## Introduction
 
-Features
-The tool supports the following modifications:
-Hexadecimal to Decimal Conversion: Replace a hexadecimal number (followed by "(hex)") with its decimal equivalent.
-Example: "1E (hex) files were added" -> "30 files were added"
+This project implements a text completion, editing, and auto-correction tool in Go. The tool processes a text file input, applies specified modifications, and outputs the modified text to another file. It incorporates various text manipulation functions to handle conversions, case adjustments, punctuation formatting, and more.
 
-Binary to Decimal Conversion: Replace a binary number (followed by "(bin)") with its decimal equivalent.
-Example: "It has been 10 (bin) years" -> "It has been 2 years"
+## Features
 
-Uppercase Conversion: Convert the preceding word to uppercase (indicated by "(up)").
-Example: "Ready, set, go (up) !" -> "Ready, set, GO !"
+- **Decimal Conversion:**
+  - Converts hexadecimal numbers preceded by "(hex)" to their decimal equivalents.
+  - Converts binary numbers preceded by "(bin)" to their decimal equivalents.
 
-Lowercase Conversion: Convert the preceding word to lowercase (indicated by "(low)").
-Example: "I should stop SHOUTING (low)" -> "I should stop shouting"
+- **Case Conversion:**
+  - Converts words preceded by "(up)" to uppercase.
+  - Converts words preceded by "(low)" to lowercase.
+  - Converts words preceded by "(cap)" to capitalized form.
+  - Supports optional conversion of a specified number of words following directives like "(up, 2)".
 
-Capitalized Conversion: Capitalize the preceding word (indicated by "(cap)").
-Example: "Welcome to the Brooklyn bridge (cap)" -> "Welcome to the Brooklyn Bridge"
+- **Punctuation Formatting:**
+  - Ensures punctuation marks (. , ! ? : ;) are correctly placed with respect to adjacent words.
+  - Handles exceptions like "..." and "!?" for proper spacing.
 
-Multiple Word Case Conversion: Convert multiple preceding words to uppercase, lowercase, or capitalized based on a specified number.
-Example: "This is so exciting (up, 2)" -> "This is SO EXCITING"
+- **Quote Handling:**
+  - Ensures single quotes (' ') are correctly placed around quoted phrases.
 
-Punctuation Formatting: Ensure punctuation marks (, . ! ? : ;) are placed correctly without space before them and with space after them.
+- **Indefinite Article Adjustment:**
+  - Changes "a" to "an" before words starting with a vowel or "h".
 
-Example: "I was sitting over there ,and then BAMM !!" -> "I was sitting over there, and then BAMM!!"
-Quotation Formatting: Ensure single quotation marks are placed correctly around words.
+## Implementation
 
-Example: "I am exactly how they describe me: ' awesome '" -> "I am exactly how they describe me: 'awesome'"Article Correction: Replace "a" with "an" if the following word starts with a vowel or 'h'.
+- **File Handling:** Utilizes Go's file system API to read from and write to files.
+- **String Manipulation:** Implements various string manipulation techniques for text modifications.
+- **Error Handling:** Includes robust error handling for file operations and data processing.
+- **Testing:** Comprehensive unit tests ensure functionality across different scenarios.
 
-Example: "There it was. A amazing rock!" -> "There it was. An amazing rock!"
+## Usage
 
+To use the tool, follow these steps:
+1. Compile the Go program.
+2. Run the executable with two arguments:
+    ```cmd
+    ./text-tool input.txt output.txt
+    ```
+    - **input.txt**: File containing the text to be modified.
+    - **output.txt**: File where modified text will be saved.
 
-Project Structure
-main.go: The main entry point of the application.
-src/libs: Contains functions for each type of text modification.
+## Example
 
-Usage
-To run the tool, use the following command:
-go run main.go <input_file> <output_file>
-Where <input_file> is the name of the file containing the text to be modified, and <output_file> is the name of the file where the modified text will be written.
+### Input (input.txt)
+```cmd
+1E (hex) files were added. It has been 10 (bin) years.
+Ready, set, go (up) ! I should stop SHOUTING (low).
+Welcome to the Brooklyn bridge (cap).
+"There it was. A amazing rock!"
+```
+
+### Output (output.txt)
+```cmd
+30 files were added. It has been 2 years.
+Ready, set, GO ! I should stop shouting.
+Welcome to the Brooklyn Bridge.
+"There it was. An amazing rock!"
+```
+
+## Conclusion
+
+This project demonstrates proficiency in Go programming, file system manipulation, and text processing techniques. It serves as a robust tool for automating text modifications based on specified rules and enhances understanding of string and number manipulation in Go.
+
+---
+
+## License
+This project is licensed under the [MIT License](LICENSE).
