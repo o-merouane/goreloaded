@@ -15,9 +15,6 @@ func AdjustPunctuation(text string) string {
 	// Handle groups of punctuation like ...
 
 	text = strings.ReplaceAll(text, ". . .", "...")
-	/*
-		text = strings.ReplaceAll(text, "!?", "!? ")
-	*/
 
 	return text
 }
